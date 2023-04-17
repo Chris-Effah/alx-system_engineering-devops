@@ -1,2 +1,2 @@
 #!/bin/bash
-tail  -1 icta | uniq  -d
+tail  -1 icta >> icta
