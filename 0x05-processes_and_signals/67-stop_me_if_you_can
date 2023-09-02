@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# a Bash script that stops 4-to_infinity_and_beyond process.
+# without using the kill command
+
+terminate()
+{
+	echo "T am invincible!!!"
+	pkill -f "7-highlander"
+	exit 0
+}
+
+trap terminate SIGTERM
+
+while true;
+do
+	sleep 1
+done
