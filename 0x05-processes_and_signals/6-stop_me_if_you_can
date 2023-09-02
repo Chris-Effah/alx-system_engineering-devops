@@ -2,4 +2,4 @@
 # a Bash script that stops 4-to_infinity_and_beyond process.
 # without using the kill command
 
-pkill -f "4-to_infinity_and_beyond process"
+pkill -f "4-to_infinity_and_beyond"
