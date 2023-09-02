@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#a bash script that displays information frpm the file /etc/passwd
+#using IFS to set the field separator 
+
+IFS=":"
+
+while read -r username password userid groupid userdesc homedir shell;
+do
+    echo "The user $username is part of the $groupid gang, lives in $homedir, and rides $shell,"
+    echo "User ID's place is protected by the passcode $password, more info about the user her: $userdesc"
+    echo
+done < /etc/passwd
