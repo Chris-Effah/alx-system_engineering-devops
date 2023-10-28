@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# a bash script connecting to a server using ssh
 
 SERVER="54.236.49.151"
 PRIVATE_KEY="~/.ssh/school"
