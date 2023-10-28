@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# connect to a server without typing a password
+
+Host
+    HostName 54.236.49.151
+    User ubuntu
+    IdentityFile ~/.ssh/school
+    PasswordAuthentication no
