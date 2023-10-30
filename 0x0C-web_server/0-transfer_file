@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# a scriot that transfers a file to my server
+
+# if number of arguments is less than 3
+if [ "$#" -lt 4 ]; then
+    echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    exit 1
+fi
+
+# Assigning parameters to variables
+PATH_TO_FILE=$1
+IP=$2
+USERNAME=$3
+PATH_TO_SSH_KEY=$4
+
+scp_command="scp -o StrictHostKeyChecking=no -i $PATH_TO_SSH_KEY $PATH_TO_FILE $USERNAME@$IP:~/"
+
+$scp_command
+
+# Check the exit status of the previous command
+if scp -o StrictHostKeyChecking=no -i "$PATH_TO_SSH_KEY" "$PATH_TO_FILE" "$USERNAME"@"$IP":~/; then
+    echo "File transferred successfully to $USERNAME@$IP:~/"
+else
+    echo "File transfer failed."
+fi
