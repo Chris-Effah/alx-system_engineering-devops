@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# a script to install nginx server and configure custom 404 page
+
+# Installing Nginx
+sudo apt-get update
+sudo apt-get install nginx -y
+
+# Ensure Nginx is running
+sudo service nginx start
+
+# Replace the default server configuration
+sudo sed -i '/listen 80 default_server;/c'\''
+server {
+    listen 80;
+    server_name 100.25.169.182;
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+}' /etc/nginx/sites-available/default
+
+# Create a custom 404 page configuration
+sudo bash -c 'cat <<EOL > /etc/nginx/sites-available/404
+server {
+    listen 80 default_server;
+    server_name _;
+    location / {
+        return 404 "Ceci n'\''est pas une page";
+    }
+}
+EOL'
+
+# Enable the custom 404 page configuration
+sudo ln -s /etc/nginx/sites-available/404 /etc/nginx/sites-enabled/
+
+# Test Nginx configuration
+sudo nginx -t
+
+# Reload Nginx to apply the changes
+sudo service nginx reload
