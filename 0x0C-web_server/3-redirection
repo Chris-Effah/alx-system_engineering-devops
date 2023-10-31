@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# a script to install nginx server
+
+# installing Nginx
+sudo apt-get update
+sudo apt-get install nginx -y
+
+# Ensure Nginx is running
+sudo service nginx start
+
+#redirection
+echo 'server {
+    listen 80;
+    server_name 100.25.169.182;
+    location /redirect_me {
+        return 301  https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+}' | sudo tee /etc/nginx/sites-available/redirect
+
+sudo lm -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/
+
+sudo nginx -t
+
+# Restart Nginx
+sudo service nginx restart
