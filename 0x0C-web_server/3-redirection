@@ -9,15 +9,17 @@ sudo apt-get install nginx -y
 sudo service nginx start
 
 #redirection
-echo 'server {
+cat > /tmp/redirect_config <<EOL
+server {
     listen 80;
     server_name 100.25.169.182;
     location /redirect_me {
-        return 301  https://www.youtube.com/watch?v=QH2-TGUlwu4;
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
-}' | sudo tee /etc/nginx/sites-available/redirect
+}
+EOL
 
-sudo ln -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/
+sudo mv /tmp/redirect_config /etc/nginx/sites-available/redirect
 
 sudo nginx -t
 
