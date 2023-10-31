@@ -17,7 +17,7 @@ echo 'server {
     }
 }' | sudo tee /etc/nginx/sites-available/redirect
 
-sudo lm -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/
 
 sudo nginx -t
 
