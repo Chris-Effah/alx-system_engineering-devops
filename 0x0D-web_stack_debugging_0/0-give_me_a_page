@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# a script that gives a page
+
+sudo service apache2 start
