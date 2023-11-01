@@ -1,4 +1,40 @@
 #!/usr/bin/env bash
 # a script that gives a page
 
-sudo service apache2 start
+# Get the container ID
+CONTAINER_ID=$(docker ps -q)
+
+if [ -z "$CONTAINER_ID" ]; then
+    echo "No running container found."
+    exit 1
+fi
+
+# Inspect the container logs
+docker logs "$CONTAINER_ID"
+
+# Start Apache service inside the container
+docker exec -it "$CONTAINER_ID" /bin/bash -c "service apache2 start"
+
+# Check Apache error log
+docker exec -it "$CONTAINER_ID" /bin/bash -c "cat /var/log/apache2/error.log"
+
+# Check the virtual host configuration
+docker exec -it "$CONTAINER_ID" /bin/bash -c "cat /etc/apache2/sites-available/000-default.conf"
+
+# Ensure the HTML page exists
+docker exec -it "$CONTAINER_ID" /bin/bash -c "ls /var/www/html/index.html"
+
+# Restart Apache inside the container
+docker exec -it "$CONTAINER_ID" /bin/bash -c "service apache2 restart"
+
+# Exit the container shell
+docker exec -it "$CONTAINER_ID" /bin/bash -c "exit"
+
+# Test with Curl
+curl_output=$(curl -s http://localhost:8080)
+
+if [[ $curl_output == *"Hello Holberton"* ]]; then
+    echo "Apache is serving the 'Hello Holberton' page."
+else
+    echo "Apache is not serving the expected page."
+fi
