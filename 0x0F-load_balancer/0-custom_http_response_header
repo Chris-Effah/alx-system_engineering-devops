@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# creating a custom header
 
 # Install Nginx if not already installed
 if ! command -v nginx &>/dev/null; then
