@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Install Nginx if not already installed
+if ! command -v nginx &>/dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y nginx
+fi
+
+# Define the custom header name and value
+custom_header_name="X-Served-By"
+custom_header_value=$(hostname)
+
+# Create a custom Nginx configuration file to set the custom header
+custom_config_file="/etc/nginx/conf.d/custom_header.conf"
+echo "add_header $custom_header_name $custom_header_value;" | sudo tee "$custom_config_file"
+
+# Test Nginx configuration for syntax errors
+if sudo nginx -t; then
+    # If the configuration is valid, reload Nginx to apply changes
+    sudo systemctl reload nginx
+else
+    echo "Nginx configuration test failed. Please check your custom header configuration."
+fi
