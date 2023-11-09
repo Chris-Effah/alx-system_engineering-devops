@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# server-02 login
+
+eval $("ssh-agent")
+
+#Path to IdentifyFile
+ssh-add ~/.ssh/school
+
+# logging into the server
+ssh ubuntu@54.237.18.114
