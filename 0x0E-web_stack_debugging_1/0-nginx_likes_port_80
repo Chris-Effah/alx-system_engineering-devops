@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# a script that fixes the listening port issue
+
+# Install Nginx
+apt-get update
+apt-get install -y nginx
+
+# Backup the default Nginx configuration file
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+
+# Configure Nginx to listen on port 80 of all active IPv4 IPs
+echo "server {
+    listen 80;
+    listen [::]:80;
+
+    server_name _;
+
+    location / {
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+    }
+}" > /etc/nginx/nginx.conf
+
+# Restart Nginx to apply the changes
+service nginx restart
+
+# Display a message indicating the completion of the configuration
+echo "Nginx is now configured to listen on port 80 of all active IPv4 IPs."
