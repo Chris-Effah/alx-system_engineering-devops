@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# a script running nginx as nginx
+
+# Stop Nginx service
+sudo service nginx stop
+
+# Change the user and group of Nginx
+sudo sed -i 's/^user .*/user nginx;/' /etc/nginx/nginx.conf
+
+# Update Nginx configuration to listen on all active IPs on port 8080
+sudo sed -i 's/^listen 80;/listen 8080;/g' /etc/nginx/sites-available/default
+
+# Start Nginx service
+sudo service nginx start
