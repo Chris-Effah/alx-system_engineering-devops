@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # a script running nginx as nginx
 
-# Stop Nginx service
-sudo service nginx stop
-
 # Change the user and group of Nginx
 sudo sed -i 's/^user .*/user nginx;/' /etc/nginx/nginx.conf
 
