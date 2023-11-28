@@ -40,7 +40,7 @@ def get_employee_todo_progress(employee_id):
         else:
             progress_ratio = "(No tasks)"
 
-        print(f"Employee {employee_name} is done with tasks {progress_ratio}: ")
+        print(f"Employee {employee_name} is done with tasks{progress_ratio}: ")
         print(f"Number of completed tasks: {completed_tasks}/{total_tasks}")
         print("Completed tasks:")
 
