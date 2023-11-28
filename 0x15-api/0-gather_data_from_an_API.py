@@ -17,6 +17,15 @@ def get_employee_todo_progress(employee_id):
     """
 
     url = f'https://jsonplaceholder.typicode.com/todos?userId={employee_id}'
+    user_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
+
+    user_response = requests.get(user_url)
+    if user_response.status_code != 200:
+        print("Error: Could not fetch employee details.")
+        return
+
+    user_data = user_response.json()
+    employee_name = user_data.get('name', f'Employee {employee_id}')
 
     response = requests.get(url)
 
@@ -31,7 +40,7 @@ def get_employee_todo_progress(employee_id):
         else:
             progress_ratio = "(No tasks)"
 
-        print(f"Employee {employee_id} is done with tasks {progress_ratio}: ")
+        print(f"Employee {employee_name} is done with tasks {progress_ratio}: ")
         print(f"Number of completed tasks: {completed_tasks}/{total_tasks}")
         print("Completed tasks:")
 
