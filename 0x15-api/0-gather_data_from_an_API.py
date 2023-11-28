@@ -41,11 +41,10 @@ def get_employee_todo_progress(employee_id):
             progress_ratio = "(No tasks)"
 
         print(f"Employee {employee_name} is done with tasks{progress_ratio}: ")
-        print(f"Number of completed tasks: {completed_tasks}/{total_tasks}")
 
         for task in todo_list:
             if task['completed']:
-                print(f"\t- {task['title']}")
+                print(f"\t {task['title']}")
 
 
 if __name__ == "__main__":
