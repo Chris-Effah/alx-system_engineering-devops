@@ -23,18 +23,17 @@ def get_employee_todo_progress(employee_id):
     if response.status_code == 200:
         todo_list = response.json()
 
-        employee_name = todo_list[0].get('username', '')
+        total_tasks = len(todo_list)
+        completed_tasks = sum(1 for task in todo_list if task['completed'])
 
-        TOTAL_NUMBER_OF_TASKS = len(todo_list)
-        NUMBER_OF_DONE_TASKS = sum(1 for task in todo_list
-                                   if task['completed'])
-        status = "OK" if TOTAL_NUMBER_OF_TASKS > 0 else "Incorrect"
+        if total_tasks > 0:
+            progress_ratio = f"({completed_tasks}/{total_tasks})"
+        else:
+            progress_ratio = "(No tasks)"
 
-        print(f"Employee {employee_name} is done with tasks "
-              f"({NUMBER_OF_DONE_TASKS/TOTAL_NUMBER_OF_TASKS}): ")
-        print(f"{employee_name}: "
-              f"{NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}")
-        print("NUMBER_OF_DONE_TASKS:")
+        print(f"Employee {employee_id} is done with tasks {progress_ratio}: ")
+        print(f"Number of completed tasks: {completed_tasks}/{total_tasks}")
+        print("Completed tasks:")
 
         for task in todo_list:
             if task['completed']:
