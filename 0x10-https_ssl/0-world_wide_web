@@ -1,2 +1,29 @@
 #!/usr/bin/env bash
-# a script that configures my domain zone 
+# a script that configures my domain zone
+
+display_info() {
+    local domain=$1
+    local subdomain=$2
+
+    if [ -z "$subdomain" ]; then
+        subdomains=("www" "lb-01" "web-01" "web-02")
+    else
+        subdomains=("$subdomain")
+    fi
+
+    for sub in "${subdomains[@]}"; do
+        record_type=$(dig +short -t A "$sub.$domain" | awk '{ if(NR==1) print "A"; else print "CNAME" }')
+        destination=$(dig +short "$sub.$domain" | awk 'NR==1{print $0}')
+        echo "The subdomain $sub is a $record_type record and points to $destination"
+    done
+}
+
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
+
+domain=$1
+subdomain=$2
+
+display_info "$domain" "$subdomain"
