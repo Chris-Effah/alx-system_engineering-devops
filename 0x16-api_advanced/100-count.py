@@ -2,6 +2,8 @@
 """
 prints titles 
 """
+
+
 import praw
 
 def count_words(subreddit, word_list, reddit=None, word_count=None):
