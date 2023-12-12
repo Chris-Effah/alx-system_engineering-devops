@@ -7,6 +7,9 @@ prints titles
 import praw
 
 def count_words(subreddit, word_list, reddit=None, word_count=None):
+    """
+    a function that counts words
+    """
     if reddit is None:
         reddit = praw.Reddit(client_id='YOUR_CLIENT_ID',
                              client_secret='YOUR_CLIENT_SECRET',
