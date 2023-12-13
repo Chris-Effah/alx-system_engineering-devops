@@ -5,6 +5,7 @@ a script that returns the number of subscribers
 
 import requests
 
+
 def number_of_subscribers(subreddit):
     """
     a function that returns the number of subscribers
