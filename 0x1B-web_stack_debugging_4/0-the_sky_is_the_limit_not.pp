@@ -11,4 +11,3 @@ exec { 'nginx-restart':
   refreshonly => true, # Ensures restart only if triggered by other resources
   subscribe   => Exec['fix--for-nginx-ulimit'], # Listens for changes to trigger restart
 }
-}
