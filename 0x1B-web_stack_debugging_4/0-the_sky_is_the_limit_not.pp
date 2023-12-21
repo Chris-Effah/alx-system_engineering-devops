@@ -1,15 +1,14 @@
-# a puppet manifest to fix nginx errors
+# This script increases the amount of traffic an Nginx server handles
 
-exec { 'fix--for-nginx-ulimit':
-  command => '/bin/sed -i "s/15/4096/" /etc/default/nginx',
-  path    => '/usr/local/bin/:/bin/',
-  onlyif  => '/bin/grep -q "15" /etc/default/nginx', # Ensures the change is needed
-  notify  => Exec['nginx-restart'], # Triggers Nginx restart if changes are applied
+# Increase the ULIMIT of the default file
+file { 'fix-for-nginx':
+  ensure  => 'file',
+  path    => '/etc/default/nginx',
+  content => inline_template('<%= File.read("/etc/default/nginx").gsub(/15/, "4096") %>'),
 }
 
-exec { 'nginx-restart':
-  command     => '/etc/init.d/nginx restart',
-  path        => '/etc/init.d/',
-  refreshonly => true, # Ensures restart only if triggered by other resources
-  subscribe   => Exec['fix--for-nginx-ulimit'], # Listens for changes to trigger restart
+# Restart Nginx
+-> exec { 'nginx-restart':
+  command => 'nginx restart',
+  path    => '/etc/init.d/',
 }
